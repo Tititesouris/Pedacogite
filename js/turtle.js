@@ -5,11 +5,13 @@ var processingInstruction = false;
 
 var house = [
     {"name": "move", "value": 200}, {"name": "turn", "value": 90}, {"name": "move", "value": 200},
-    {"name": "turn", "value": 60}, {"name": "move", "value": Math.hypot(200, 100)}, {"name": "turn", "value": 60},
-    {"name": "move", "value": Math.hypot(200, 100)}, {"name": "turn", "value": 60}, {"name": "move", "value": 200},
-    {"name": "turn", "value": 90}, {"name": "move", "value": 150}, {"name": "turn", "value": 90},
-    {"name": "move", "value": 100}, {"name": "turn", "value": -90}, {"name": "move", "value": 50},
-    {"name": "turn", "value": -90}, {"name": "move", "value": 100}
+    {"name": "speed", "value": 1}, {"name": "turn", "value": 45}, {"name": "move", "value": Math.hypot(100, 200)},
+    {"name": "turn", "value": 45}, {"name": "move", "value": 200}, {"name": "turn", "value": 45},
+    {"name": "move", "value": Math.hypot(100, 200)}, {"name": "turn", "value": 45},
+    {"name": "move", "value": 200}, {"name": "turn", "value": 90}, {"name": "move", "value": 267},
+    {"name": "turn", "value": 90}, {"name": "move", "value": 100}, {"name": "turn", "value": -90},
+    {"name": "move", "value": 50}, {"name": "turn", "value": -90}, {"name": "move", "value": 100},
+    {"name": "pen", "value": false}, {"name": "turn", "value": 180}, {"name": "move", "value": 150}
 ];
 
 function addElement(element, attributes) {
@@ -58,6 +60,12 @@ function executeInstruction(instruction) {
         case "turn":
             $(turtle).rotate(instruction.value);
             break;
+        case "pen":
+            $(turtle).setPen(instruction.value);
+            break;
+        case "speed":
+            $(turtle).setSpeed(instruction.value);
+            break;
     }
 }
 
@@ -81,7 +89,7 @@ $.fn.setAttributes = function(distance, theta) {
         'transform': 'translate(' + x2 + ',' + y2 + ') rotate(' + -angle + ')'
     });
     
-    if ($(this).attr("pen")) {
+    if ($(this).attr("pen") == "true") {
         addTempLine(x1, y1, x2, y2);
     }
 }
@@ -117,12 +125,14 @@ $.fn.rotate = function(theta) {
 
 $.fn.setPen = function(value) {
     $(this).attr("pen", value);
+    processingInstruction = false;
 }
 
 $.fn.setSpeed = function(value) {
-    if (0 < speed && speed <= 1) {
+    if (0 < value && value <= 1) {
         $(this).attr("speed", value);
     }
+    processingInstruction = false;
 }
     
 $(function () {

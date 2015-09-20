@@ -19,7 +19,7 @@
     <body>
         <div id="canvas" style="width: 600px; height: 600px; border: 1px solid black;">
             <svg x="0px" y="0px" version="1.1" baseProfile="full" width="100%" height="100%" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-                <g id="turtle" transform="translate(500,500) rotate(0)" x="500" y="500" angle="0" pen="true" speed="1">
+                <g id="turtle" transform="translate(500,500) rotate(0)" x="500" y="500" angle="0" pen="true" speed="0.1">
                     <circle cx="<?php echo 2 * $turtle_size; ?>" cy="0" r="<?php echo $turtle_size; ?>" fill="#538a44" stroke="#544a2c" stroke-width="2" />
                     <circle cx="0" cy="0" r="<?php echo 2 * $turtle_size; ?>" fill="#544a2c" stroke="#242a0c" stroke-width="2" />
                     <circle cx="-<?php echo $turtle_size - 2; ?>" cy="-<?php echo $turtle_size - 2; ?>" r="<?php echo $turtle_size / 2; ?>" fill="#ad953e" stroke="#8d650e" stroke-width="<?php echo $turtle_size / 5; ?>" />
