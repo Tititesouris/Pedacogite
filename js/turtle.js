@@ -1,6 +1,17 @@
 window.svg;
 window.turtle;
 
+var processingInstruction = false;
+
+var house = [
+    {"name": "move", "value": 200}, {"name": "turn", "value": 90}, {"name": "move", "value": 200},
+    {"name": "turn", "value": 60}, {"name": "move", "value": Math.hypot(200, 100)}, {"name": "turn", "value": 60},
+    {"name": "move", "value": Math.hypot(200, 100)}, {"name": "turn", "value": 60}, {"name": "move", "value": 200},
+    {"name": "turn", "value": 90}, {"name": "move", "value": 150}, {"name": "turn", "value": 90},
+    {"name": "move", "value": 100}, {"name": "turn", "value": -90}, {"name": "move", "value": 50},
+    {"name": "turn", "value": -90}, {"name": "move", "value": 100}
+];
+
 function addElement(element, attributes) {
     var svgElement = $(document.createElementNS('http://www.w3.org/2000/svg', element));
     svgElement.attr(attributes).prependTo(svg);
@@ -25,7 +36,18 @@ function replaceTempLines() {
 }
 
 function executeInstructions(instructions) {
-    executeInstruction(instructions[0]);
+    var i = 0;
+    var instructionsInterval = setInterval(function() {
+        if (i >= instructions.length) {
+            clearInterval(instructionsInterval);
+        }
+        else {
+            if (!processingInstruction) {
+                processingInstruction = true;
+                $.when(executeInstruction(instructions[i])).done(i++);
+            }
+        }
+    }, 10);
 }
 
 function executeInstruction(instruction) {
@@ -70,6 +92,7 @@ $.fn.moveForward = function(distance) {
         if (i >= distance) {
             clearInterval(moveInterval);
             replaceTempLines();
+            processingInstruction = false;
         }
         else {
             $(turtle).setAttributes(1, 0);
@@ -83,6 +106,7 @@ $.fn.rotate = function(theta) {
     var rotateInterval = setInterval(function() {
         if (i >= Math.abs(theta)) {
             clearInterval(rotateInterval);
+            processingInstruction = false;
         }
         else {
             $(turtle).setAttributes(0, Math.sign(theta));
@@ -104,7 +128,7 @@ $.fn.setSpeed = function(value) {
 $(function () {
     svg = $('svg');
     turtle = $('svg').find("#turtle");
-    var instructions = [{"name": "move", "value": 100}, {"name": "turn", "value": 90}, {"name": "move", "value": 500}];
+    var instructions = house;
     executeInstructions(instructions);
     /*setInterval(function() {
         turtle.moveForward(1);
