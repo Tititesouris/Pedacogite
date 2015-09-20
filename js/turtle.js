@@ -27,9 +27,9 @@ function addTempLine(x1, y1, x2, y2) {
 
 function replaceTempLines() {
     var tempLines = $(svg).find("line[temporary=true]");
-    var first = $(tempLines).first();
+    var first = $(tempLines).last();
     var x1 = $(first).attr("x1"), y1 = $(first).attr("y1");
-    var last = $(tempLines).last();
+    var last = $(tempLines).first();
     var x2 = $(last).attr("x2"), y2 = $(last).attr("y2");
     addLine(x1, y1, x2, y2);
     $(tempLines).remove();
