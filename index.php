@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <link href="./css/materialize.min.css" rel="stylesheet" media="all" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" media="all" />
+        <link href="./css/icons.css" rel="stylesheet" media="all" />
         <link href="./css/main.css" rel="stylesheet" media="all" />
 
     </head>
@@ -29,6 +29,14 @@
                     <circle cx="0" cy="0" r="<?php echo $turtle_size / 2; ?>" fill="#ad953e" stroke="#8d650e" stroke-width="<?php echo $turtle_size / 5; ?>" />
                 </g>
             </svg>
+        </div>
+        <textarea id="script-input">
+            print("Hello World!")
+        </textarea>
+        <a class="btn-floating btn-large green"><i class="material-icons" style="font-size: 3rem;">play_arrow</i></a>
+        <a class="btn-floating btn-large red"><i class="material-icons" style="font-size: 3rem;">stop</i></a>
+        <div id="script-output" readonly="readonly">
+            
         </div>
         <footer>
             <script src="./js/jquery-1.11.3.min.js"></script>
