@@ -30,18 +30,15 @@
                 </g>
             </svg>
         </div>
-        <textarea id="script-input">
-            print("Hello World!")
-        </textarea>
-        <a class="btn-floating btn-large green"><i class="material-icons" style="font-size: 3rem;">play_arrow</i></a>
-        <a class="btn-floating btn-large red"><i class="material-icons" style="font-size: 3rem;">stop</i></a>
-        <div id="script-output" readonly="readonly">
-            
-        </div>
+        <textarea id="script-input">print("Hello World!")</textarea>
+        <a id="start-btn" class="btn-floating btn-large green"><i class="material-icons" style="font-size: 3rem;">play_arrow</i></a>
+        <a id="stop-btn" class="btn-floating btn-large red"><i class="material-icons" style="font-size: 3rem;">stop</i></a>
+        <div id="script-output" readonly="readonly" style="border: 1px solid black; height: 200px;">Welcome!</div>
         <footer>
             <script src="./js/jquery-1.11.3.min.js"></script>
             <script src="./js/materialize.min.js"></script>
             <script src="./js/turtle.js"></script>
+            <script src="./js/parser.js"></script>
         </footer>
     </body>
 </html>

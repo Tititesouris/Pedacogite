@@ -134,7 +134,7 @@ $.fn.setSpeed = function(value) {
     }
     processingInstruction = false;
 }
-    
+
 $(function () {
     svg = $('svg');
     turtle = $('svg').find("#turtle");
