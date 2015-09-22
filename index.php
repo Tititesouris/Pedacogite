@@ -30,10 +30,11 @@
                 </g>
             </svg>
         </div>
-        <textarea id="script-input">print("Hello World!")</textarea>
+        <textarea id="script-input">print("Hello World!")<br />move(50)</textarea>
         <a id="start-btn" class="btn-floating btn-large green"><i class="material-icons" style="font-size: 3rem;">play_arrow</i></a>
         <a id="stop-btn" class="btn-floating btn-large red"><i class="material-icons" style="font-size: 3rem;">stop</i></a>
-        <div id="script-output" readonly="readonly" style="border: 1px solid black; height: 200px;">Welcome!</div>
+        <div id="script-output" style="border: 1px solid black; height: 200px;">-- TurtleScript v1.0 --</div>
+        <div id="export-box" style="border: 1px solid black; height: 200px;">[]</div>
         <footer>
             <script src="./js/jquery-1.11.3.min.js"></script>
             <script src="./js/materialize.min.js"></script>

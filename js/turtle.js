@@ -138,12 +138,5 @@ $.fn.setSpeed = function(value) {
 $(function () {
     svg = $('svg');
     turtle = $('svg').find("#turtle");
-    var instructions = house;
-    executeInstructions(instructions);
-    /*setInterval(function() {
-        turtle.moveForward(1);
-        turtle.rotate(1);
-    }, 10);
-    */
     console.log("Page Weight:" + $('*').length);
 });
