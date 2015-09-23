@@ -20,8 +20,7 @@ function turtleTurn(angle) {
 
 function turtlePenUpDown(value) {
     $(export_box).parseInstruction("pen", value);
-    console.log(value);
-    turtlePrint("Lève le crayon.");
+    turtlePrint((value) ? "Pose le crayon." : "Lève le crayon.");
 }
 
 $.fn.parse = function() {
