@@ -13,9 +13,15 @@ function turtleMove(distance) {
     turtlePrint("Avance de " + distance);
 }
 
+function turtleTurn(angle) {
+    $(export_box).parseInstruction("turn", angle);
+    turtlePrint("Tourne de " + angle + " degrés.");
+}
+
 $.fn.parse = function() {
     var printRegex = /^print\("(.*)"\)$/i;
     var moveRegex = /^move\((\d*)\)$/;
+    var turnRegex = /^turn\((-?\d*)\)$/;
     
     var lines = $(this).val().split('\n');
     for (var i = 0; i < lines.length; i++) {
@@ -30,6 +36,12 @@ $.fn.parse = function() {
         var distance = moveRegex.exec(line);
         if (distance != null) {
             turtleMove(distance[1]);
+            continue;
+        }
+        
+        var angle = turnRegex.exec(line);
+        if (angle != null) {
+            turtleTurn(angle[1]);
             continue;
         }
     }
