@@ -30,7 +30,7 @@
                 </g>
             </svg>
         </div>
-        <textarea id="script-input">print("Hello World!")&#13;&#10;move(50)</textarea>
+        <textarea id="script-input">print("Hello World!")&#13;&#10;move(50)&#13;&#10;turn(50)&#13;&#10;move(50)&#13;&#10;penUp()&#13;&#10;move(50)&#13;&#10;penDown()&#13;&#10;move(100)</textarea>
         <a id="start-btn" class="btn-floating btn-large green"><i class="material-icons" style="font-size: 3rem;">play_arrow</i></a>
         <a id="stop-btn" class="btn-floating btn-large red"><i class="material-icons" style="font-size: 3rem;">stop</i></a>
         <div id="script-output" style="border: 1px solid black; height: 200px;">-- TurtleScript v1.0 --</div>

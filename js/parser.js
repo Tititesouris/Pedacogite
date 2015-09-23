@@ -18,10 +18,17 @@ function turtleTurn(angle) {
     turtlePrint("Tourne de " + angle + " degrés.");
 }
 
+function turtlePenUpDown(value) {
+    $(export_box).parseInstruction("pen", value);
+    console.log(value);
+    turtlePrint("Lève le crayon.");
+}
+
 $.fn.parse = function() {
     var printRegex = /^print\("(.*)"\)$/i;
     var moveRegex = /^move\((\d*)\)$/;
     var turnRegex = /^turn\((-?\d*)\)$/;
+    var penUpDownRegex = /^pen(Up|Down)\(\)$/;
     
     var lines = $(this).val().split('\n');
     for (var i = 0; i < lines.length; i++) {
@@ -44,6 +51,12 @@ $.fn.parse = function() {
             turtleTurn(angle[1]);
             continue;
         }
+        
+        var penUpDown = penUpDownRegex.exec(line);
+        if (penUpDown != null) {
+            turtlePenUpDown(penUpDown[1] == "Down");
+            continue;
+        }
     }
 }
 
@@ -52,8 +65,9 @@ $.fn.parseInstructions = function() {
 }
 
 $.fn.parseInstruction = function(name, value) {
-    var comma = ($(this).text().charAt(1) == ']') ? "" : ", ";
-    $(this).text($(this).text().slice(0,-1) + comma + '{"name": "' + name + '", "value": "' + value + '"}]');
+    var comma = ($(this).text().charAt(1) == ']') ? '' : ', ';
+    var quotes = (value || $.isNumeric(value)) ? '' : '"';
+    $(this).text($(this).text().slice(0,-1) + comma + '{"name": "' + name + '", "value": ' + quotes + value + quotes + '}]');
 }
 
 $(function () {
