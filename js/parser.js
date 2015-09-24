@@ -82,4 +82,8 @@ $(function () {
         script_input.parse();
         executeInstructions(export_box.parseInstructions());
     });
+    
+    stop_btn.click(function() {
+        turtle.reset();
+    });
 });

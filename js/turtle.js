@@ -135,6 +135,18 @@ $.fn.setSpeed = function(value) {
     processingInstruction = false;
 }
 
+$.fn.reset = function() {
+    this.setPen(true);
+    this.setSpeed(0.1);
+    $(this).attr({
+        'x': 500,
+        'y': 500,
+        'angle': 0,
+        'transform': 'translate(' + 500 + ',' + 500 + ') rotate(' + 0 + ')'
+    });
+    svg.find("line").remove();
+}
+
 $(function () {
     svg = $('svg');
     turtle = $('svg').find("#turtle");
