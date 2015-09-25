@@ -45,7 +45,7 @@ $.fn.parse = function() {
     
     var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/i;
     var printRegex = /^print\((?:"(.*)"|([_a-z]+\w*))\)$/i;
-    var moveRegex = /^move\((\d*)\)$/i;
+    var moveRegex = /^move\((?:(\d*)|([_a-z]+\w*))\)$/i;
     var turnRegex = /^turn\((-?\d*)\)$/i;
     var penUpDownRegex = /^pen(Up|Down)\(\)$/i;
     
@@ -85,7 +85,15 @@ $.fn.parse = function() {
         
         var distance = moveRegex.exec(line);
         if (distance != null) {
-            turtleMove(distance[1]);
+            if (distance[1] === undefined) {
+                var varvalue = variables[distance[2]];
+                if (varvalue != undefined) {
+                    turtleMove(varvalue);
+                }
+            }
+            else {
+                turtleMove(distance[1]);
+            }
             continue;
         }
         
