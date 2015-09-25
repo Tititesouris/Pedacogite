@@ -2,6 +2,7 @@ window.svg;
 window.turtle;
 
 var processingInstruction = false;
+var stopped = false;
 
 var house = [
     {"name": "move", "value": 200}, {"name": "turn", "value": 90}, {"name": "move", "value": 200},
@@ -40,7 +41,7 @@ function replaceTempLines() {
 function executeInstructions(instructions) {
     var i = 0;
     var instructionsInterval = setInterval(function() {
-        if (i >= instructions.length) {
+        if (i >= instructions.length || stopped) {
             clearInterval(instructionsInterval);
         }
         else {
@@ -75,10 +76,11 @@ $.fn.isPaused = function() {
 }
 
 $.fn.setAttributes = function(distance, theta) {
+    if (stopped) { return; }
     var x1 = parseFloat($(this).attr("x")), y1 = parseFloat($(this).attr("y"));
     var x2 = x1, y2 = y1;
     var angle = -parseInt($(this).attr("angle"));
-    
+
     if (distance != 0) {
         x2 += Math.cos(angle * Math.PI / 180) * distance;
         y2 -= Math.sin(angle * Math.PI / 180) * distance;
@@ -86,14 +88,14 @@ $.fn.setAttributes = function(distance, theta) {
     if (theta != 0) {
         angle = (angle + theta) % 360;
     }
-    
+
     $(this).attr({
         'x': x2,
         'y': y2,
         'angle': -angle,
         'transform': 'translate(' + x2 + ',' + y2 + ') rotate(' + -angle + ')'
     });
-    
+
     if ($(this).attr("pen") == "true") {
         addTempLine(x1, y1, x2, y2);
     }
@@ -107,7 +109,7 @@ $.fn.moveForward = function(distance) {
             replaceTempLines();
             processingInstruction = false;
         }
-        else {
+        else if (!turtle.isPaused()) {
             $(turtle).setAttributes(1, 0);
             i++;
         }
@@ -121,7 +123,7 @@ $.fn.rotate = function(theta) {
             clearInterval(rotateInterval);
             processingInstruction = false;
         }
-        else {
+        else if (!turtle.isPaused()) {
             $(turtle).setAttributes(0, Math.sign(theta));
             i++;
         }
@@ -143,7 +145,7 @@ $.fn.setSpeed = function(value) {
 $.fn.reset = function() {
     this.setPen(true);
     this.setSpeed(0.1);
-    this.attr('pause', false);
+    this.pause(false);
     $(this).attr({
         'x': 500,
         'y': 500,
@@ -151,6 +153,8 @@ $.fn.reset = function() {
         'transform': 'translate(' + 500 + ',' + 500 + ') rotate(' + 0 + ')'
     });
     svg.find("line").remove();
+    play_btn.show();
+    pause_btn.hide();
 }
 
 $.fn.pause = function(value) {
@@ -158,7 +162,7 @@ $.fn.pause = function(value) {
 }
 
 $(function () {
-    svg = $('svg');
-    turtle = $('svg').find("#turtle");
+    svg = $('#canvas svg');
+    turtle = svg.find("#turtle");
     console.log("Page Weight:" + $('*').length);
 });

@@ -79,6 +79,7 @@ $(function () {
     stop_btn = $("#stop-btn");
     
     play_btn.click(function() {
+        stopped = false;
         if (turtle.isPaused()) {
             turtle.pause(false);
         }
@@ -99,6 +100,7 @@ $(function () {
     });
     
     stop_btn.click(function() {
+        stopped = true;
         turtle.reset();
     });
 });
