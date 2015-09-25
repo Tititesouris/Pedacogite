@@ -5,12 +5,18 @@ window.play_btn;
 window.pause_btn;
 window.stop_btn;
 
+window.variables = {};
+
 function isInt(n) {
     return +n === n && !(n % 1);
 }
 
 function println(text) {
     $(script_output).html($(script_output).html() + '<br />' + text);
+}
+
+function addVariable(name, value) {
+    variables[name] = ($.isNumeric(value)) ? parseFloat(value) : value;
 }
 
 function turtleInit(x, y, angle) {
@@ -34,9 +40,11 @@ function turtlePenUpDown(value) {
 }
 
 $.fn.parse = function() {
-    var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/i;
     var commentRegex = /^#+/i;
-    var printRegex = /^print\("(.*)"\)$/i;
+    var variableRegex = /^([_a-z]+\w*) *= *(?:(\d+(?:.\d+)?)|"(.*)")$/i;
+    
+    var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/i;
+    var printRegex = /^print\((?:"(.*)"|([_a-z]+\w*))\)$/i;
     var moveRegex = /^move\((\d*)\)$/i;
     var turnRegex = /^turn\((-?\d*)\)$/i;
     var penUpDownRegex = /^pen(Up|Down)\(\)$/i;
@@ -49,14 +57,29 @@ $.fn.parse = function() {
     }
     for (var i = 0; i < lines.length; i++) {
         var line = $.trim(lines[i]);
+        
         var comment = commentRegex.exec(line);
         if (comment != null) {
             continue;
         }
         
+        var variable = variableRegex.exec(line);
+        if (variable != null) {
+            addVariable(variable[1], (variable[2] === undefined) ? variable[3] : variable[2])
+            continue;
+        }
+        
         var text = printRegex.exec(line);
         if (text != null) {
-            turtlePrint(text[1]);
+            if (text[1] === undefined) {
+                var varvalue = variables[text[2]];
+                if (varvalue != undefined) {
+                    turtlePrint(varvalue);
+                }
+            }
+            else {
+                turtlePrint(text[1]);
+            }
             continue;
         }
         
@@ -121,6 +144,7 @@ $(function () {
     
     stop_btn.click(function() {
         stopped = true;
+        variables = {};
         turtle.reset();
     });
 });

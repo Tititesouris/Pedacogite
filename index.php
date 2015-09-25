@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="col s6 m6 l6" style="height: 100%;">
-                <textarea id="script-input">print("Hello World!")&#13;&#10;move(50)&#13;&#10;turn(50)&#13;&#10;move(50)&#13;&#10;penUp()&#13;&#10;move(50)&#13;&#10;penDown()&#13;&#10;move(100)</textarea>
+                <textarea id="script-input">print("Bonjour le monde!")&#13;&#10;move(50)&#13;&#10;turn(50)&#13;&#10;move(50)&#13;&#10;penUp()&#13;&#10;move(50)&#13;&#10;penDown()&#13;&#10;move(100)</textarea>
                 <div id="script-output">-- TurtleScript v1.0 --</div>
             </div>
         </div>
