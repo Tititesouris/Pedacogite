@@ -1,6 +1,5 @@
-function outf(text) { 
-    var mypre = document.getElementById("output"); 
-    mypre.innerHTML = mypre.innerHTML + text; 
+function output(text) { 
+    $('#output-box').append(text);
 } 
 
 function builtinRead(x) {
@@ -10,15 +9,13 @@ function builtinRead(x) {
 }
 
 $(function() {
-    $('#run-btn').click(function() {
-        var prog = $('#yourcode').text();
-        var mypre = $('#output');
-        mypre.innerHTML = '';
-        Sk.pre = "output";
-        Sk.configure({output:outf, read:builtinRead});
+    $('#play-btn').click(function() {
+        var inputBox = $('#input-box').text();
+        Sk.div = "output-box";
+        Sk.configure({output: output, read: builtinRead});
         (Sk.TurtleGraphics || (Sk.TurtleGraphics = {})).target = 'canvas';
         var myPromise = Sk.misceval.asyncToPromise(function() {
-            return Sk.importMainWithBody("<stdin>", false, prog, true);
+            return Sk.importMainWithBody("<stdin>", false, inputBox, true);
         });
         myPromise.then(function(mod) {
             console.log('success');

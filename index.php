@@ -17,14 +17,14 @@
     </head>
 
     <body>
+        <textarea id="input-box" cols="40" rows="50">import turtle&#13;&#10;t = turtle.Turtle()&#13;&#10;t.forward(100)&#13;&#10;print "Hello World"</textarea>
         
-        <form>
-            <textarea id="yourcode" cols="40" rows="10">import turtle&#13;&#10;t = turtle.Turtle()&#13;&#10;t.forward(100)&#13;&#10;print "Hello World"</textarea>
-            <br />
-            <button type="button" id="run-btn">Run</button>
-        </form>
-        
-        <pre id="output" ></pre>
+            <div id="button-box">
+                    <a id="play-btn" class="btn-floating btn-large green"><i class="material-icons">play_arrow</i></a>
+                    <a id="pause-btn" class="btn-floating btn-large orange darken-3" style="display: none;"><i class="material-icons">pause</i></a>
+                    <a id="stop-btn" class="btn-floating btn-large red"><i class="material-icons">stop</i></a>
+                </div>
+        <div id="output-box"></div>
         
         <div id="canvas"></div>
         
