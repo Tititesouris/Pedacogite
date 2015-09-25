@@ -35,6 +35,7 @@ function turtlePenUpDown(value) {
 
 $.fn.parse = function() {
     var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/i;
+    var commentRegex = /^#+/i;
     var printRegex = /^print\("(.*)"\)$/i;
     var moveRegex = /^move\((\d*)\)$/i;
     var turnRegex = /^turn\((-?\d*)\)$/i;
@@ -48,6 +49,10 @@ $.fn.parse = function() {
     }
     for (var i = 0; i < lines.length; i++) {
         var line = $.trim(lines[i]);
+        var comment = commentRegex.exec(line);
+        if (comment != null) {
+            continue;
+        }
         
         var text = printRegex.exec(line);
         if (text != null) {
