@@ -173,8 +173,8 @@ $.fn.setSpeed = function(value) {
 }
 
 $.fn.reset = function() {
-    this.setPen(true);
-    this.setSpeed(0.1);
+    this.attr("pen", true);
+    this.attr("speed", 0.1);
     this.pause(false);
     $(this).attr({
         'x': 500,
