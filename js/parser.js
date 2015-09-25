@@ -5,6 +5,15 @@ window.play_btn;
 window.pause_btn;
 window.stop_btn;
 
+function isInt(n) {
+    return +n === n && !(n % 1);
+}
+
+function turtleInit(x, y, angle) {
+    $(export_box).parseInstruction("init", x + "&" + y + "&" + angle);
+    turtlePrint("Commence en x=" + x + ", y=" + y + " avec un angle de " + angle + " degrés.");
+}
+
 function turtlePrint(text) {
     $(script_output).html($(script_output).html() + '<br />' + text);
 }
@@ -25,13 +34,19 @@ function turtlePenUpDown(value) {
 }
 
 $.fn.parse = function() {
+    var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/;
     var printRegex = /^print\("(.*)"\)$/i;
     var moveRegex = /^move\((\d*)\)$/;
     var turnRegex = /^turn\((-?\d*)\)$/;
     var penUpDownRegex = /^pen(Up|Down)\(\)$/;
     
-    var lines = $(this).val().split('\n');
-    for (var i = 0; i < lines.length; i++) {
+    var lines = $(this).val().split('\n').filter(function(l) { return l != ""});
+    var firstLine = $.trim(lines[0]);
+    var init = initRegex.exec(firstLine);
+    if (init != null) {
+        turtleInit(init[1], init[2], init[3])
+    }
+    for (var i = 1; i < lines.length; i++) {
         var line = $.trim(lines[i]);
         
         var text = printRegex.exec(line);
@@ -66,7 +81,7 @@ $.fn.parseInstructions = function() {
 
 $.fn.parseInstruction = function(name, value) {
     var comma = ($(this).text().charAt(1) == ']') ? '' : ', ';
-    var quotes = (value || $.isNumeric(value)) ? '' : '"';
+    var quotes = (isInt(value)) ? '' : '"';
     $(this).text($(this).text().slice(0,-1) + comma + '{"name": "' + name + '", "value": ' + quotes + value + quotes + '}]');
 }
 

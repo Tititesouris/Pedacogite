@@ -40,12 +40,18 @@ function replaceTempLines() {
 
 function executeInstructions(instructions) {
     var i = 0;
+    if (instructions[0].name == "init") {
+        var values = instructions[0].value.split('&');
+        turtle.setLocation(values[0], values[1]);
+        turtle.setRotation(values[2]);
+        i++;
+    }
     var instructionsInterval = setInterval(function() {
         if (i >= instructions.length || stopped) {
             clearInterval(instructionsInterval);
         }
         else {
-            if (!processingInstruction && !turtle.isPaused()) {
+            if (!processingInstruction) {
                 processingInstruction = true;
                 $.when(executeInstruction(instructions[i])).done(i++);
             }
@@ -73,6 +79,21 @@ function executeInstruction(instruction) {
 
 $.fn.isPaused = function() {
     return this.attr('pause') == "true"
+}
+
+$.fn.setLocation = function(x, y) {
+    $(this).attr({
+        'x': x,
+        'y': y,
+        'transform': 'translate(' + x + ',' + y + ') rotate(' + $(this).attr('angle') + ')'
+    });
+}
+
+$.fn.setRotation = function(angle) {
+    $(this).attr({
+        'angle': -angle,
+        'transform': 'translate(' + $(this).attr('x') + ',' + $(this).attr('y') + ') rotate(' + -angle + ')'
+    });
 }
 
 $.fn.setAttributes = function(distance, theta) {
