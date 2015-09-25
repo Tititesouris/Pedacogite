@@ -1,7 +1,8 @@
 window.script_input;
 window.script_output;
 window.export_box;
-window.start_btn;
+window.play_btn;
+window.pause_btn;
 window.stop_btn;
 
 function turtlePrint(text) {
@@ -73,14 +74,28 @@ $(function () {
     script_input = $("#script-input");
     script_output = $("#script-output");
     export_box = $("#export-box");
-    start_btn = $("#start-btn");
+    play_btn = $("#play-btn");
+    pause_btn = $("#pause-btn");
     stop_btn = $("#stop-btn");
     
-    start_btn.click(function() {
-        script_output.text('-- TurtleScript v1.0 --');
-        export_box.text('[]');
-        script_input.parse();
-        executeInstructions(export_box.parseInstructions());
+    play_btn.click(function() {
+        if (turtle.isPaused()) {
+            turtle.pause(false);
+        }
+        else {
+            script_output.text('-- TurtleScript v1.0 --');
+            export_box.text('[]');
+            script_input.parse();
+            executeInstructions(export_box.parseInstructions());
+        }
+        $(this).hide();
+        pause_btn.show();
+    });
+    
+    pause_btn.click(function() {
+        turtle.pause(true);
+        $(this).hide();
+        play_btn.show();
     });
     
     stop_btn.click(function() {

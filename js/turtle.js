@@ -44,7 +44,7 @@ function executeInstructions(instructions) {
             clearInterval(instructionsInterval);
         }
         else {
-            if (!processingInstruction) {
+            if (!processingInstruction && !turtle.isPaused()) {
                 processingInstruction = true;
                 $.when(executeInstruction(instructions[i])).done(i++);
             }
@@ -67,6 +67,11 @@ function executeInstruction(instruction) {
             $(turtle).setSpeed(instruction.value);
             break;
     }
+}
+
+
+$.fn.isPaused = function() {
+    return this.attr('pause') == "true"
 }
 
 $.fn.setAttributes = function(distance, theta) {
@@ -138,6 +143,7 @@ $.fn.setSpeed = function(value) {
 $.fn.reset = function() {
     this.setPen(true);
     this.setSpeed(0.1);
+    this.attr('pause', false);
     $(this).attr({
         'x': 500,
         'y': 500,
@@ -145,6 +151,10 @@ $.fn.reset = function() {
         'transform': 'translate(' + 500 + ',' + 500 + ') rotate(' + 0 + ')'
     });
     svg.find("line").remove();
+}
+
+$.fn.pause = function(value) {
+    this.attr('pause', value);
 }
 
 $(function () {
