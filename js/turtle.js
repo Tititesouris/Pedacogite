@@ -44,6 +44,7 @@ function executeInstructions(instructions) {
         var values = instructions[0].value.split('&');
         turtle.setLocation(values[0], values[1]);
         turtle.setRotation(values[2]);
+        println("Commence en x=" + values[0] + ", y=" + values[1]+ " avec un angle de " + values[2] + " degrés.");
         i++;
     }
     var instructionsInterval = setInterval(function() {
@@ -72,6 +73,10 @@ function executeInstruction(instruction) {
             break;
         case "speed":
             $(turtle).setSpeed(instruction.value);
+            break;
+        case "print":
+            println(instruction.value);
+            processingInstruction = false;
             break;
     }
 }
@@ -123,6 +128,7 @@ $.fn.setAttributes = function(distance, theta) {
 }
 
 $.fn.moveForward = function(distance) {
+    println("Avance de " + distance + ".");
     var i = 0;
     var moveInterval = setInterval(function() {
         if (i >= distance) {
@@ -138,6 +144,7 @@ $.fn.moveForward = function(distance) {
 }
 
 $.fn.rotate = function(theta) {
+    println("Tourne de " + theta + " degrés.");
     var i = 0;
     var rotateInterval = setInterval(function() {
         if (i >= Math.abs(theta)) {
@@ -152,11 +159,13 @@ $.fn.rotate = function(theta) {
 }
 
 $.fn.setPen = function(value) {
+    println((value) ? "Pose le crayon." : "Lève le crayon.");
     $(this).attr("pen", value);
     processingInstruction = false;
 }
 
 $.fn.setSpeed = function(value) {
+    println("Passe en vitesse " + value + ".");
     if (0 < value && value <= 1) {
         $(this).attr("speed", value);
     }

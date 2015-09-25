@@ -9,36 +9,36 @@ function isInt(n) {
     return +n === n && !(n % 1);
 }
 
+function println(text) {
+    $(script_output).html($(script_output).html() + '<br />' + text);
+}
+
 function turtleInit(x, y, angle) {
     $(export_box).parseInstruction("init", x + "&" + y + "&" + angle);
-    turtlePrint("Commence en x=" + x + ", y=" + y + " avec un angle de " + angle + " degrés.");
 }
 
 function turtlePrint(text) {
-    $(script_output).html($(script_output).html() + '<br />' + text);
+    $(export_box).parseInstruction("print", text);
 }
 
 function turtleMove(distance) {
     $(export_box).parseInstruction("move", distance);
-    turtlePrint("Avance de " + distance);
 }
 
 function turtleTurn(angle) {
     $(export_box).parseInstruction("turn", angle);
-    turtlePrint("Tourne de " + angle + " degrés.");
 }
 
 function turtlePenUpDown(value) {
     $(export_box).parseInstruction("pen", value);
-    turtlePrint((value) ? "Pose le crayon." : "Lève le crayon.");
 }
 
 $.fn.parse = function() {
-    var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/;
+    var initRegex = /^init\((\d+), *(\d+), *(\d+)\)$/i;
     var printRegex = /^print\("(.*)"\)$/i;
-    var moveRegex = /^move\((\d*)\)$/;
-    var turnRegex = /^turn\((-?\d*)\)$/;
-    var penUpDownRegex = /^pen(Up|Down)\(\)$/;
+    var moveRegex = /^move\((\d*)\)$/i;
+    var turnRegex = /^turn\((-?\d*)\)$/i;
+    var penUpDownRegex = /^pen(Up|Down)\(\)$/i;
     
     var lines = $(this).val().split('\n').filter(function(l) { return l != ""});
     var firstLine = $.trim(lines[0]);
@@ -46,7 +46,7 @@ $.fn.parse = function() {
     if (init != null) {
         turtleInit(init[1], init[2], init[3])
     }
-    for (var i = 1; i < lines.length; i++) {
+    for (var i = 0; i < lines.length; i++) {
         var line = $.trim(lines[i]);
         
         var text = printRegex.exec(line);
